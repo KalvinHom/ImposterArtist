@@ -1,0 +1,12 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+
+  min-height: 300px;
+  padding-top: 24px;
+  h1 {
+    font-size: 24px;
+  }
+}
