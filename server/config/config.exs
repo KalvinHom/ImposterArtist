@@ -7,8 +7,8 @@
 # General application configuration
 import Config
 
-config :imposter_artist,
-  ecto_repos: [ImposterArtist.Repo]
+# config :imposter_artist,
+#   ecto_repos: [ImposterArtist.Repo]
 
 # Configures the endpoint
 config :imposter_artist, ImposterArtistWeb.Endpoint,

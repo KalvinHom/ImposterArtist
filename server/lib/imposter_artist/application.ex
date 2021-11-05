@@ -9,7 +9,7 @@ defmodule ImposterArtist.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      ImposterArtist.Repo,
+      # ImposterArtist.Repo,
       # Start the Telemetry supervisor
       ImposterArtistWeb.Telemetry,
       # Start the PubSub system
