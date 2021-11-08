@@ -25,6 +25,9 @@ config :imposter_artist, ImposterArtistWeb.Endpoint,
   secret_key_base: "5e8sduWpe4TZWHOLl8r/P0l/KqHLf6/9TxDxJFdASJFQJ4hvTY50sajn5bfnRXiu",
   watchers: []
 
+config :cors_plug,
+  origin: ["http://localhost:3000"]
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

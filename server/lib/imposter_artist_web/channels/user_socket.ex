@@ -10,7 +10,7 @@ defmodule ImposterArtistWeb.UserSocket do
   # Uncomment the following line to define a "room:*" topic
   # pointing to the `ImposterArtistWeb.RoomChannel`:
   #
-  # channel "room:*", ImposterArtistWeb.RoomChannel
+  channel("game:*", ImposterArtistWeb.GameRoomChannel)
   #
   # To create a channel file, use the mix task:
   #
@@ -18,7 +18,6 @@ defmodule ImposterArtistWeb.UserSocket do
   #
   # See the [`Channels guide`](https://hexdocs.pm/phoenix/channels.html)
   # for futher details.
-
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

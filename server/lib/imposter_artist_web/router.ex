@@ -2,11 +2,12 @@ defmodule ImposterArtistWeb.Router do
   use ImposterArtistWeb, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug(:accepts, ["json"])
   end
 
   scope "/api", ImposterArtistWeb do
-    pipe_through :api
+    pipe_through(:api)
+    post("/game", GameController, :create)
   end
 
   # Enables LiveDashboard only for development
@@ -20,8 +21,8 @@ defmodule ImposterArtistWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
-      live_dashboard "/dashboard", metrics: ImposterArtistWeb.Telemetry
+      pipe_through([:fetch_session, :protect_from_forgery])
+      live_dashboard("/dashboard", metrics: ImposterArtistWeb.Telemetry)
     end
   end
 
@@ -31,9 +32,9 @@ defmodule ImposterArtistWeb.Router do
   # node running the Phoenix server.
   if Mix.env() == :dev do
     scope "/dev" do
-      pipe_through [:fetch_session, :protect_from_forgery]
+      pipe_through([:fetch_session, :protect_from_forgery])
 
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 end

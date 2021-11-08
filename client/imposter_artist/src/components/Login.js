@@ -1,14 +1,17 @@
 import React, { useState, useContext } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import UserContext from "../contexts/UserContext";
 import "./Login.scss";
 
 function Login() {
   const [userInput, setUserInput] = useState("");
   const [error, setError] = useState("");
-  const [user, setUser] = useContext(UserContext);
+  const [_user, setUser] = useContext(UserContext);
   // add more validations
   function validate(username) {
-    return username.trim() != "";
+    console.log(username);
+    return username.trim() !== "";
   }
 
   function handleChange(e) {
@@ -19,10 +22,11 @@ function Login() {
   function handleSubmit(e) {
     e.preventDefault();
     const error = !validate(userInput);
-    console.log(error);
     if (error) return setError("Invalid username");
     setError(null);
-    setUser(userInput);
+    const newUser = { id: uuidv4(), username: userInput };
+    setUser(newUser);
+    localStorage.setItem("user", JSON.stringify(newUser));
   }
   return (
     <div className="Login">

@@ -8,12 +8,7 @@ function Home() {
   const [user, _setUser] = useContext(UserContext);
   // add more validations
 
-  return (
-    <div className="Home">
-      <h1>Imposter Artist</h1>
-      {user ? <UserLobby /> : <Login />}
-    </div>
-  );
+  return <div className="Home">{user ? <UserLobby /> : <Login />}</div>;
 }
 
 export default Home;

@@ -3,4 +3,15 @@
   min-height: 100vh;
   color: white;
   font-size: 14px;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    padding-top: 24px;
+    h1 {
+      font-size: 24px;
+    }
+  }
 }

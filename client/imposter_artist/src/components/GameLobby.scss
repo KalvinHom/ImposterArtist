@@ -1,0 +1,9 @@
+.GameLobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .players {
+    margin-top: 8px;
+  }
+}

@@ -15,7 +15,11 @@ defmodule ImposterArtist.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: ImposterArtist.PubSub},
       # Start the Endpoint (http/https)
-      ImposterArtistWeb.Endpoint
+      ImposterArtistWeb.Endpoint,
+      {ImposterArtist.GamesSupervisor, []},
+      {Registry, [keys: :unique, name: :game_registry]},
+      ImposterArtistWeb.Presence
+
       # Start a worker by calling: ImposterArtist.Worker.start_link(arg)
       # {ImposterArtist.Worker, arg}
     ]

@@ -32,7 +32,7 @@ defmodule ImposterArtistWeb.Endpoint do
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
     plug(Phoenix.CodeReloader)
-    plug(Phoenix.Ecto.CheckRepoStatus, otp_app: :imposter_artist)
+    # plug(Phoenix.Ecto.CheckRepoStatus, otp_app: :imposter_artist)
   end
 
   plug(Phoenix.LiveDashboard.RequestLogger,
@@ -48,6 +48,8 @@ defmodule ImposterArtistWeb.Endpoint do
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
   )
+
+  plug(CORSPlug)
 
   plug(Plug.MethodOverride)
   plug(Plug.Head)
