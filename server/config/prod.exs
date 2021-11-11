@@ -10,14 +10,14 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :imposter_artist, ImposterArtistWeb.Endpoint,
-  url: [host: "example.com", port: 80],
+  url: [host: System.get_env("RENDER_EXTERNAL_HOSTNAME") || "localhost", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
 config :logger, level: :info
 
 config :cors_plug,
-  origin: ["https://imposter-artist.kalvinhom.dev"]
+  origin: ["https://imposter-artist.kalvinhom.dev", "https://imposterarist-client.onrender.com"]
 
 # ## SSL Support
 #
