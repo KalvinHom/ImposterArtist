@@ -11,8 +11,7 @@ import Config
 # before starting your production server.
 config :imposter_artist, ImposterArtistWeb.Endpoint,
   url: [host: System.get_env("RENDER_EXTERNAL_HOSTNAME") || "localhost"],
-  http: [port: {:system, 80}],
-  https: [port: 443]
+  http: [port: {:system, 80}]
 
 # Do not print debug messages in production
 config :logger, level: :info
