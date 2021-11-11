@@ -46,7 +46,7 @@ defmodule ImposterArtistWeb.GameRoomChannel do
   end
 
   def handle_in("update_whiteboard", payload, socket) do
-    broadcast_from(socket, "update_game_state", payload)
+    broadcast_from(socket, "update_whiteboard", payload)
     {:noreply, socket}
   end
 

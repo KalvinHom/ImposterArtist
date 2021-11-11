@@ -71,7 +71,7 @@ function Whiteboard({ game, channel }) {
       const h = canvas.height;
       drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
     };
-    channel.on("update_game_state", onDrawingEvent);
+    channel.on("update_whiteboard", onDrawingEvent);
   }, []);
 
   useEffect(() => {
