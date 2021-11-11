@@ -4,6 +4,7 @@ defmodule ImposterArtist.Application do
   @moduledoc false
 
   use Application
+  use Supervisor
 
   @impl true
   def start(_type, _args) do
@@ -18,7 +19,8 @@ defmodule ImposterArtist.Application do
       ImposterArtistWeb.Endpoint,
       {ImposterArtist.GamesSupervisor, []},
       {Registry, [keys: :unique, name: :game_registry]},
-      ImposterArtistWeb.Presence
+      ImposterArtistWeb.Presence,
+      worker(ImposterArtistWeb.ChannelWatcher, [:game])
 
       # Start a worker by calling: ImposterArtist.Worker.start_link(arg)
       # {ImposterArtist.Worker, arg}

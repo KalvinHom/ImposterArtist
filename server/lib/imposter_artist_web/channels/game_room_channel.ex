@@ -1,14 +1,16 @@
 defmodule ImposterArtistWeb.GameRoomChannel do
   use ImposterArtistWeb, :channel
   alias ImposterArtistWeb.Presence
+  alias ImposterArtistWeb.ChannelWatcher
   alias ImposterArtist.Games
 
   @impl true
   def join("game:" <> code, %{"user" => user}, socket) do
     if authorized?(user) do
       IO.inspect("joining channel")
-      send(self(), :after_join)
+
       game = Games.join(code, user)
+      send(self(), :after_join)
 
       socket =
         socket
@@ -21,16 +23,38 @@ defmodule ImposterArtistWeb.GameRoomChannel do
     end
   end
 
+  def leave(socket, code, user_id) do
+    game = Games.leave(code, user_id)
+    broadcast_from(socket, "update_game_state", game)
+    {:ok, game, socket}
+  end
+
   def handle_info(:after_join, socket) do
-    {:ok, _} =
-      Presence.track(
-        socket,
-        socket.assigns.user["id"],
-        socket.assigns.user
+    :ok =
+      ChannelWatcher.monitor(
+        :game,
+        self(),
+        {__MODULE__, :leave, [socket, socket.assigns.current_game, socket.assigns.user["id"]]}
       )
 
-    push(socket, "presence_state", Presence.list(socket))
+    broadcast_from(socket, "update_game_state", Games.get(socket.assigns.current_game))
+
+    # {:ok, _} =
+    #   Presence.track(
+    #     socket,
+    #     socket.assigns.user["id"],
+    #     socket.assigns.user
+    #   )
+
+    # push(socket, "presence_state", Presence.list(socket))
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_in("start", payload, socket) do
+    IO.inspect(Presence.list(socket))
+    Games.start(socket.assigns.code)
+    {:no_reply, socket}
   end
 
   # Channels can be used in a request/response fashion

@@ -12,11 +12,17 @@ defmodule ImposterArtist.Games.Game do
   defstruct host: nil,
             code: nil,
             players: [],
-            game_state: @new_game
+            state: @new_game
 
   @impl true
   def init(game) do
     {:ok, game}
+  end
+
+  def get(code) do
+    code
+    |> via_tuple()
+    |> GenServer.call(:get)
   end
 
   def add_player(code, user) do
@@ -24,8 +30,21 @@ defmodule ImposterArtist.Games.Game do
 
     code
     |> via_tuple()
+    |> IO.inspect()
     |> GenServer.call({:add_player, user})
     |> IO.inspect()
+  end
+
+  def remove_player(code, user_id) do
+    code
+    |> via_tuple()
+    |> GenServer.call({:remove_player, user_id})
+  end
+
+  def update_game(code, game) do
+    code
+    |> via_tuple()
+    |> GenServer.call({:update_game, game})
   end
 
   def stop(process_name, stop_reason) do
@@ -33,22 +52,35 @@ defmodule ImposterArtist.Games.Game do
   end
 
   @impl true
-  def handle_call({:add_player, player}, _from, state) do
-    state = Map.update!(state, :players, &[player | &1])
-    IO.inspect(state)
-    IO.inspect(player)
+  def handle_call(:get, _from, state) do
     {:reply, state, state}
   end
 
-  def handle_call({:remove_player, player}, _from, state) do
+  @impl true
+  def handle_call({:add_player, player}, _from, state) do
+    state = Map.update!(state, :players, &[player | &1])
+    {:reply, state, state}
+  end
+
+  def handle_call({:remove_player, user_id}, _from, state) do
     state =
       Map.update!(
         state,
         :players,
-        &Enum.reject(&1, fn p -> p["id"] == player["id"] end)
+        &Enum.reject(&1, fn p -> p["id"] == user_id end)
       )
 
+    state =
+      case state.host["id"] == user_id do
+        true -> Map.put(state, :host, List.first(state.players))
+        _ -> state
+      end
+
     {:reply, state, state}
+  end
+
+  def handle_call({:update_game, game}, _from, state) do
+    {:reply, game, game}
   end
 
   @impl true
@@ -65,8 +97,10 @@ defmodule ImposterArtist.Games.Game do
     }
   end
 
-  defp via_tuple(name),
-    do: {:via, Registry, {:game_registry, name}}
+  defp via_tuple(name) do
+    IO.inspect(name)
+    {:via, Registry, {:game_registry, name}}
+  end
 
   # # Start the server
   # {:ok, pid} = GenServer.start_link(Stack, [:hello])
