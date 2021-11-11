@@ -11,7 +11,7 @@ import Config
 # before starting your production server.
 config :imposter_artist, ImposterArtistWeb.Endpoint,
   url: [host: "imposter-artist-api.kalvinhom.dev", port: 80],
-  check_origin: ["*.kalvinhom.dev"]
+  check_origin: ["//*.kalvinhom.dev"]
 
 # Do not print debug messages in production
 config :logger, level: :info
