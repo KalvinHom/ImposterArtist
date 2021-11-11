@@ -6,6 +6,6 @@ build-server:
 	MIX_ENV=prod mix release --overwrite;
 
 build-client:
-	cd client; \
+	cd client/imposter_artist; \
 	yarn; \
 	yarn build;
