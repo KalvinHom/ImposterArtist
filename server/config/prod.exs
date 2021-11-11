@@ -10,7 +10,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :imposter_artist, ImposterArtistWeb.Endpoint,
-  url: [host: System.get_env("RENDER_EXTERNAL_HOSTNAME") || "localhost"],
+  url: [host: "imposter-artist-api.kalvinhom.dev"],
   http: [port: {:system, 80}]
 
 # Do not print debug messages in production

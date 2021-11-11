@@ -3,9 +3,11 @@ import Voting from "./Voting";
 import VotingComplete from "./VotingComplete";
 import "./GameStatus.scss";
 function GameStatus({ game, user, channel }) {
+  console.log(game);
+  console.log(user);
   const word =
     game.imposter.id === user.id
-      ? "Your are the imposter"
+      ? "You are the imposter"
       : `Word: ${game.word}`;
 
   return (
