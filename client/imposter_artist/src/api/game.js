@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const url = "http://localhost:4000";
+const host = process.env.REACT_APP_API_URL;
 
 export function create(user) {
-  return axios.post(`${url}/api/game`, user);
+  return axios.post(`${host}/api/game`, user);
 }

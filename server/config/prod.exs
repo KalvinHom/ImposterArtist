@@ -16,6 +16,9 @@ config :imposter_artist, ImposterArtistWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :cors_plug,
+  origin: ["https://imposter-artist.kalvinhom.dev"]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

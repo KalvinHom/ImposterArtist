@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useContext, useState } from "react";
-import { Presence } from "phoenix";
 import { useParams, useNavigate } from "react-router-dom";
+import Whiteboard from "./Whiteboard";
 import UserContext from "../contexts/UserContext";
-import GameOptions from "./GameOptions";
+import GameStatus from "./GameStatus";
 import socket from "../socket";
 import "./GameLobby.scss";
+import WaitingRoom from "./WaitingRoom";
 function GameLobby() {
   const { code } = useParams();
   const channelRef = useRef(null);
@@ -14,8 +15,7 @@ function GameLobby() {
 
   useEffect(() => {
     return () => {
-      console.log("leaving");
-      channelRef.current.leave();
+      channelRef.current && channelRef.current.leave();
     };
   }, []);
   useEffect(() => {
@@ -25,40 +25,24 @@ function GameLobby() {
     channelRef.current = socket.channel(`game:${code}`, { user: user });
 
     channelRef.current.join().receive("ok", (payload) => {
-      console.log(payload);
       updateGame(payload);
     });
 
     function updateGameState(data) {
-      console.log(data);
       updateGame(data);
     }
 
     channelRef.current.on("update_game_state", updateGameState);
   }, [code, user, navigate]);
 
-  console.log(channelRef.current);
-  return (
-    <div className="GameLobby">
+  if (game && game.state !== "new")
+    return (
       <div>
-        Game Code:
-        <br />
-        {code}
+        <GameStatus game={game} user={user} channel={channelRef.current} />
+        <Whiteboard game={game} channel={channelRef.current} />
       </div>
-      <div className="host">
-        Host:
-        <br />
-        {game && game.host.username}
-      </div>
-      <div className="players">Players:</div>
-      {game &&
-        game.players.map((player) => {
-          console.log(player);
-          return <div key={player.id}>{player.username}</div>;
-        })}
-      <GameOptions game={game} user={user} channel={channelRef.current} />
-    </div>
-  );
+    );
+  return <WaitingRoom game={game} user={user} channel={channelRef.current} />;
 }
 
 export default GameLobby;

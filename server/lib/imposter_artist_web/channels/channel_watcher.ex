@@ -39,9 +39,6 @@ defmodule ImposterArtistWeb.ChannelWatcher do
   end
 
   def handle_info({:EXIT, pid, reason}, state) do
-    IO.inspect("exit reason")
-    IO.inspect(reason)
-
     case Map.fetch(state.channels, pid) do
       :error ->
         {:noreply, state}

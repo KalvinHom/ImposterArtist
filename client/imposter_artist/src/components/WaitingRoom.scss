@@ -1,0 +1,12 @@
+.WaitingRoom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .host {
+    margin-top: 8px;
+  }
+  .players {
+    margin-top: 8px;
+  }
+}

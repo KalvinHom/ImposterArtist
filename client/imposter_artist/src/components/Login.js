@@ -10,7 +10,6 @@ function Login() {
   const [_user, setUser] = useContext(UserContext);
   // add more validations
   function validate(username) {
-    console.log(username);
     return username.trim() !== "";
   }
 
