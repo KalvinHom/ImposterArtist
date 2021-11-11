@@ -1,6 +1,6 @@
 import { Socket } from "phoenix";
 
-const url = "ws://localhost:4000";
-const socket = new Socket(`${url}/socket`);
+const host = process.env.REACT_APP_WS_URL;
+const socket = new Socket(`${host}/socket`);
 socket.connect();
 export default socket;
