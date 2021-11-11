@@ -10,7 +10,8 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :imposter_artist, ImposterArtistWeb.Endpoint,
-  url: [host: "imposter-artist-api.kalvinhom.dev", port: 80]
+  url: [host: "imposter-artist-api.kalvinhom.dev", port: 80],
+  check_origin: ["*.kalvinhom.dev"]
 
 # Do not print debug messages in production
 config :logger, level: :info
